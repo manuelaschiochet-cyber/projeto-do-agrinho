@@ -1,17 +1,24 @@
-// Mensagem no console para testar o JavaScript
-console.log("Script carregado com sucesso! 🚀");
+// Aguarda o carregamento completo da página
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Página carregada com sucesso!");
 
-// Seleciona o botão (caso exista no HTML)
-const botao = document.querySelector("button");
+  // Seleciona elementos do HTML
+  const button = document.getElementById("btn");
+  const output = document.getElementById("output");
 
-// Função ao clicar no botão
-if (botao) {
-  botao.addEventListener("click", function () {
-    alert("Você clicou no botão! 👋");
+  // Evento de clique no botão
+  button.addEventListener("click", async () => {
+    output.textContent = "Carregando dados...";
+
+    try {
+      // Exemplo de API pública (frases aleatórias)
+      const response = await fetch("https://api.quotable.io/random");
+      const data = await response.json();
+
+      output.textContent = `"${data.content}" — ${data.author}`;
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+      output.textContent = "Erro ao carregar dados.";
+    }
   });
-}
-
-// Exemplo: mudar cor do fundo ao clicar na tela
-document.addEventListener("click", function () {
-  document.body.style.backgroundColor = "#e0f7ff";
 });
